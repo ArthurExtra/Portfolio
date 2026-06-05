@@ -9,7 +9,9 @@
     "preview": "bunx vite preview",
     "clean": "rm -rf dist .vite",
     "lint": "tsc --noEmit",
-    "deploy": "bun run build && touch dist/.nojekyll && bunx gh-pages -d dist -m \"chore(deploy): final correct path build\""
+    "deploy": "bun run build && touch dist/.nojekyll && bunx gh-pages -d dist -m \"chore(deploy): final correct path build\"",
+    "server": "bunx tsx server.ts",
+    "start": "NODE_ENV=production bun run build && bun run server"
   },
   "dependencies": {
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
@@ -32,7 +34,7 @@
     "esbuild": "^0.25.0",
     "gh-pages": "^6.3.0",
     "tailwindcss": "^4.1.14",
-    "tsx": "^4.21.0",
+    "tsx": "^4.22.4",
     "typescript": "~5.8.2",
     "vite": "^6.2.3"
   }
