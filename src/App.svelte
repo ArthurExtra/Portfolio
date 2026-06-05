@@ -146,7 +146,7 @@
 
 <div
     id="full-portfolio-body"
-    class="min-h-screen bg-[#1b1c22] text-slate-100 font-sans antialiased selection:bg-slate-700 selection:text-white"
+    class="min-h-screen bg-[#1b1c22] text-slate-100 font-sans antialiased selection:bg-slate-700 selection:text-white overflow-x-hidden max-w-full relative"
 >
     <div
         class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-sky-500/5 rounded-full blur-3xl pointer-events-none"
@@ -157,79 +157,81 @@
 
     <Navbar {currentTime} />
 
-    <Hero />
+    <main class="relative z-10 w-full max-w-full overflow-x-hidden">
+        <Hero />
 
-    <About />
+        <About />
 
-    <Experience />
+        <Experience />
 
-    <Projects />
+        <Projects />
 
-    <section
-        id="interactive-workbench"
-        class="py-24 border-b border-white/[0.03] max-w-6xl mx-auto px-6"
-    >
-        <div class="space-y-2 mb-10 text-left">
-            <span
-                class="text-sky-400 font-bold text-[10px] font-mono uppercase tracking-widest block"
-                >Operational Telemetry</span
-            >
-            <h2
-                class="text-2xl sm:text-3.5xl font-black text-white tracking-tight"
-            >
-                Interactive Systems Shell Sandbox
-            </h2>
-            <p
-                class="text-xs sm:text-sm text-slate-400 max-w-xl font-semibold leading-relaxed"
-            >
-                Review cache logs, inspect direct Go config snippets, and
-                execute custom shell parameters inside an active Unix terminal
-                mockup environment.
-            </p>
-        </div>
-
-        <TerminalWorkbench
-            {repoFiles}
-            skillsData={skills}
-            projectsData={projectsList}
-            bind:selectedFile
-        />
-    </section>
-
-    <section
-        id="ux-playground"
-        class="border-b border-white/[0.03] py-24 bg-dot"
-    >
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="space-y-1.5 mb-14 text-left">
+        <section
+            id="interactive-workbench"
+            class="py-24 border-b border-white/[0.03] max-w-6xl mx-auto px-6 overflow-x-hidden"
+        >
+            <div class="space-y-2 mb-10 text-left">
                 <span
                     class="text-sky-400 font-bold text-[10px] font-mono uppercase tracking-widest block"
-                    >Usability Models &amp; Schedulers</span
+                    >Operational Telemetry</span
                 >
                 <h2
                     class="text-2xl sm:text-3.5xl font-black text-white tracking-tight"
                 >
-                    System Cognitive &amp; Interactive Simulator
+                    Interactive Systems Shell Sandbox
                 </h2>
                 <p
                     class="text-xs sm:text-sm text-slate-400 max-w-xl font-semibold leading-relaxed"
                 >
-                    Interact with cognitive design laws that prove why clean
-                    structures, responsive feedback loops, and reduced choice
-                    grids convert users flawlessly.
+                    Review cache logs, inspect direct Go config snippets, and
+                    execute custom shell parameters inside an active Unix
+                    terminal mockup environment.
                 </p>
             </div>
 
-            <UXLawsSimulator />
-        </div>
-    </section>
+            <TerminalWorkbench
+                {repoFiles}
+                skillsData={skills}
+                projectsData={projectsList}
+                bind:selectedFile
+            />
+        </section>
 
-    <Skills />
+        <section
+            id="ux-playground"
+            class="border-b border-white/[0.03] py-24 bg-dot overflow-x-hidden"
+        >
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="space-y-1.5 mb-14 text-left">
+                    <span
+                        class="text-sky-400 font-bold text-[10px] font-mono uppercase tracking-widest block"
+                        >Usability Models &amp; Schedulers</span
+                    >
+                    <h2
+                        class="text-2xl sm:text-3.5xl font-black text-white tracking-tight"
+                    >
+                        System Cognitive &amp; Interactive Simulator
+                    </h2>
+                    <p
+                        class="text-xs sm:text-sm text-slate-400 max-w-xl font-semibold leading-relaxed"
+                    >
+                        Interact with cognitive design laws that prove why clean
+                        structures, responsive feedback loops, and reduced
+                        choice grids convert users flawlessly.
+                    </p>
+                </div>
 
-    <Contact {botStatus} {currentTime} />
+                <UXLawsSimulator />
+            </div>
+        </section>
+
+        <Skills />
+
+        <Contact {botStatus} {currentTime} />
+    </main>
 
     <footer
-        class="bg-[#12131a] text-slate-500 text-[10px] sm:text-xs py-12 border-t border-white/[0.02] text-center space-y-3.5 font-mono"
+        class="bg-[#12131a] text-slate-500 text-[10px] sm:text-xs py-12 border-t border-white/[0.02] text-center space-y-3.5 font-mono overflow-x-hidden"
     >
         <div
             class="flex justify-center gap-5 text-slate-400 border-b border-white/[0.02] pb-5 max-w-xs mx-auto text-base"
