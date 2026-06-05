@@ -44,6 +44,7 @@ To enable direct Telegram notifications on your deployed static build (gh-pages 
 3. Place your Telegram Bot Token and Chat ID inside the `.env` file like this:
 
 ViteTeleGramBotToken=
+
 ViteTelegramChatId=
 
 Since your application builds as a static front-end, Vite compiles these variables into the static production bundle securely during build time.
