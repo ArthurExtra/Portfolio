@@ -21,39 +21,36 @@ export async function gatherVisitorTelemetry(): Promise<TelemetryData> {
   };
 
   try {
-    const res = await fetch("https://ipwhois.app/json/");
+    const res = await fetch("https://ipapi.co/json/");
     if (res.ok) {
       const ipData = await res.json();
-      if (ipData && ipData.success !== false) {
+      if (ipData && !ipData.error) {
         return {
           ...baseData,
           ip: ipData.ip,
           city: ipData.city,
           region: ipData.region,
-          country: ipData.country,
-          org: ipData.org || ipData.isp,
+          country: ipData.country_name,
+          org: ipData.org,
         };
       }
     }
     throw new Error("Primary fetch fallback required");
   } catch (error) {
     try {
-      const backupRes = await fetch("https://api.ipify.org?format=json");
+      const backupRes = await fetch("https://ipwhois.app/json/");
       if (backupRes.ok) {
-        const { ip } = await backupRes.json();
-        const geoRes = await fetch(`https://ipwhois.app/json/${ip}`);
-        if (geoRes.ok) {
-          const geoData = await geoRes.json();
+        const geoData = await backupRes.json();
+        if (geoData && geoData.success !== false) {
           return {
             ...baseData,
-            ip: geoData.ip || ip,
+            ip: geoData.ip,
             city: geoData.city,
             region: geoData.region,
             country: geoData.country,
             org: geoData.org || geoData.isp,
           };
         }
-        return { ...baseData, ip };
       }
     } catch (e) {
       console.warn("Network boundaries telemetry lookup bypassed.");
