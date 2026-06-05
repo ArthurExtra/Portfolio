@@ -61,8 +61,8 @@ export async function transmitTelegramPayload(
   chatId: string,
   message: string,
 ): Promise<{ success: boolean; error?: string }> {
-  const botToken = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
-  const targetChatId = chatId || import.meta.env.VITE_TELEGRAM_CHAT_ID;
+  const botToken = import.meta.env.ViteTeleGramBotToken;
+  const targetChatId = chatId || import.meta.env.ViteTelegramChatId;
 
   if (!botToken || !targetChatId) {
     return {
