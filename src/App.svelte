@@ -13,10 +13,6 @@
     import TerminalWorkbench from "./components/TerminalWorkbench.svelte";
     import UXLawsSimulator from "./components/UXLawsSimulator.svelte";
 
-    import {
-        gatherVisitorTelemetry,
-        transmitTelegramPayload,
-    } from "./lib/telemetry";
     import { profile, repoFiles, skills, projects } from "./lib/data";
     import type { RepoFile, Project } from "./lib/data";
 
@@ -25,7 +21,6 @@
 
     let currentTime = $state<string>("");
     let botStatus = $state<"idle" | "checking" | "active" | "error">("idle");
-    let hasNotified = false;
 
     onMount(() => {
         const blockContextMenu = (e: MouseEvent) => {
@@ -102,50 +97,6 @@
         };
         updateTime();
         const clockInterval = setInterval(updateTime, 1000);
-
-        const initializeTelegramBot = async () => {
-            botStatus = "checking";
-            try {
-                botStatus = "active";
-                triggerVisitorAlert();
-            } catch (err) {
-                console.error(err);
-                botStatus = "error";
-            }
-        };
-
-        const triggerVisitorAlert = async () => {
-            if (hasNotified) return;
-            try {
-                hasNotified = true;
-                const telemetry = await gatherVisitorTelemetry();
-
-                const ipString = telemetry.ip
-                    ? `\`${telemetry.ip}\``
-                    : "Unknown IP";
-                const locationString = telemetry.city
-                    ? `${telemetry.city}, ${telemetry.region || ""} (${telemetry.country || ""})`
-                    : "Hillah, Babil (Iraq)";
-                const ispString = telemetry.org
-                    ? `\`${telemetry.org}\``
-                    : "Zain/Earthlink Node";
-
-                const alertMsg =
-                    `[Gate Alert] *New Svelte Portfolio Connection*` +
-                    `\n*Time:* \`${new Date().toLocaleTimeString("en-US", { hour12: true })}\`` +
-                    `\n*IP:* ${ipString}` +
-                    `\n*Location:* _${locationString}_` +
-                    `\n*Network:* ${ispString}` +
-                    `\n*Console Window:* \`${telemetry.screenWidth}x${telemetry.screenHeight}\`` +
-                    `\n\n*Agent:* \`${telemetry.userAgent.substring(0, 70)}...\``;
-
-                await transmitTelegramPayload("", alertMsg);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        initializeTelegramBot();
 
         const fetchGithubData = async () => {
             try {
