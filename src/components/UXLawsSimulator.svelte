@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import {
         Pointer,
         Layers,
@@ -7,6 +8,11 @@
         ChevronLeft,
         ChevronRight,
     } from "lucide-svelte";
+    import {
+        gatherVisitorTelemetry,
+        transmitTelegramPayload,
+        type TelemetryData,
+    } from "$lib/telemetry";
 
     let activePlaygroundTab = $state("fitts");
 
@@ -29,6 +35,13 @@
         name: "",
         email: "",
         choice: "",
+    });
+
+    let visitorData = $state<TelemetryData | null>(null);
+    let isTransmitting = $state(false);
+
+    onMount(async () => {
+        visitorData = await gatherVisitorTelemetry();
     });
 
     $effect(() => {
@@ -93,6 +106,48 @@
         if (zeigarnikStep < 4) {
             zeigarnikStep += 1;
         }
+    };
+
+    const submitOnboardingPayload = async () => {
+        if (isTransmitting) return;
+        isTransmitting = true;
+
+        const currentIp = visitorData?.ip || "Private";
+        const currentCity = visitorData?.city || "Hillah";
+        const currentRegion = visitorData?.region || "Babil";
+        const currentCountry = visitorData?.country || "Iraq";
+        const currentOrg = visitorData?.org || "ISP Node";
+        const currentTime =
+            visitorData?.timestamp ||
+            new Date().toLocaleTimeString("en-US", { hour12: true });
+        const currentAgent = visitorData?.userAgent || navigator.userAgent;
+        const currentScreen = visitorData
+            ? `${visitorData.screenWidth}x${visitorData.screenHeight}`
+            : `${window.screen.width}x${window.screen.height}`;
+
+        const markdownMessage = `*[Inquiry Gate] New Onboarding Submission*
+
+*Name:* ${formData.name || "N/A"}
+*Email:* \`${formData.email || "N/A"}\`
+*Selected Track:* _${formData.choice || "N/A"}_
+
+*Diagnostic Parameters:*
+*Time:* \`${currentTime}\`
+*IP Address:* \`${currentIp}\`
+*Location:* \`${currentCity}, ${currentRegion} (${currentCountry})\`
+*Network Route:* \`${currentOrg}\`
+*Console Dimensions:* \`${currentScreen}\`
+*Client Agent:* \`${currentAgent}\``;
+
+        const result = await transmitTelegramPayload("", markdownMessage);
+        if (result.success) {
+            alert("Setup credentials successfully transmitted!");
+            zeigarnikStep = 1;
+            formData = { name: "", email: "", choice: "" };
+        } else {
+            alert(`Transmission fallback error: ${result.error}`);
+        }
+        isTransmitting = false;
     };
 </script>
 
@@ -358,7 +413,7 @@
                                 <button
                                     onclick={() =>
                                         startHicksChallenge(hicksMode)}
-                                    class="bg-slate-900 hover:bg-slate-850 border border-slate-800 px-5 py-2.5 rounded-xl text-sky-400 font-mono text-xs font-bold cursor-pointer transition-transform hover:scale-105"
+                                    class="bg-slate-900 hover:bg-slate-855 border border-slate-800 px-5 py-2.5 rounded-xl text-sky-400 font-mono text-xs font-bold cursor-pointer transition-transform hover:scale-105"
                                 >
                                     Launch Latency Choice Evaluation
                                 </button>
@@ -795,20 +850,13 @@
                                             </button>
                                         {:else}
                                             <button
-                                                onclick={() => {
-                                                    alert(
-                                                        "Setup credentials successfully transmitted!",
-                                                    );
-                                                    zeigarnikStep = 1;
-                                                    formData = {
-                                                        name: "",
-                                                        email: "",
-                                                        choice: "",
-                                                    };
-                                                }}
-                                                class="bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold text-xs px-5 py-2.5 rounded-xl cursor-pointer transition-all shadow-lg uppercase tracking-wider"
+                                                onclick={submitOnboardingPayload}
+                                                disabled={isTransmitting}
+                                                class="bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold text-xs px-5 py-2.5 rounded-xl cursor-pointer transition-all shadow-lg uppercase tracking-wider disabled:opacity-50"
                                             >
-                                                Submit Onboarding
+                                                {isTransmitting
+                                                    ? "Transmitting..."
+                                                    : "Submit Onboarding"}
                                             </button>
                                         {/if}
                                     </div>
@@ -835,21 +883,25 @@
                                 class="flex justify-between items-center pb-2 border-b border-slate-800"
                             >
                                 <span class="text-slate-500"
-                                    >Monolithic forms:</span
+                                    >Visitor Identity:</span
                                 >
-                                <span class="text-rose-400 font-bold font-mono"
-                                    >48% completion</span
-                                >
+                                <span class="text-sky-400 font-bold font-mono">
+                                    {visitorData?.ip || "Fetching..."}
+                                </span>
                             </div>
                             <div
                                 class="flex justify-between items-center pb-2 border-b border-slate-800"
                             >
                                 <span class="text-slate-500"
-                                    >Visual layout trackers:</span
+                                    >Resolved Node:</span
                                 >
-                                <span class="text-sky-400 font-bold font-mono"
-                                    >92% completion</span
+                                <span
+                                    class="text-sky-400 font-bold font-mono text-right max-w-[150px] truncate"
                                 >
+                                    {visitorData?.city
+                                        ? `${visitorData.city}, ${visitorData.country}`
+                                        : "Locating..."}
+                                </span>
                             </div>
                         </div>
 
