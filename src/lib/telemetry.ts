@@ -65,15 +65,18 @@ export async function transmitTelegramPayload(
   message: string,
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const response = await fetch("/api/telegram/sendMessage", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId || undefined,
-        text: message,
-        parse_mode: "MarkdownV2",
-      }),
-    });
+    const response = await fetch(
+      "http://localhost:5000/api/telegram/sendMessage",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId || undefined,
+          text: message,
+          parse_mode: "MarkdownV2",
+        }),
+      },
+    );
 
     const data = await response.json();
     if (response.ok && data.ok) {
