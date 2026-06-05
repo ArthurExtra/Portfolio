@@ -26,6 +26,7 @@
     let currentTime = $state<string>("");
     const telegramChatId = import.meta.env.ViteTelegramChatId || "";
     let botStatus = $state<"idle" | "checking" | "active" | "error">("idle");
+    let hasNotified = false;
 
     onMount(() => {
         const blockContextMenu = (e: MouseEvent) => {
@@ -106,17 +107,7 @@
         const initializeTelegramBot = async () => {
             botStatus = "checking";
             try {
-                const meRes = await fetch("/api/telegram/getMe");
-                if (meRes.ok) {
-                    const meData = await meRes.json();
-                    if (meData.ok && meData.result) {
-                        botStatus = "active";
-                    } else {
-                        botStatus = "error";
-                    }
-                } else {
-                    botStatus = "error";
-                }
+                botStatus = "active";
                 triggerVisitorAlert(telegramChatId);
             } catch (err) {
                 console.error(err);
@@ -125,13 +116,9 @@
         };
 
         const triggerVisitorAlert = async (targetId: string) => {
-            if (
-                !targetId ||
-                sessionStorage.getItem("tg_visitor_notified") === "true"
-            )
-                return;
+            if (!targetId || hasNotified) return;
             try {
-                sessionStorage.setItem("tg_visitor_notified", "true");
+                hasNotified = true;
                 const telemetry = await gatherVisitorTelemetry();
 
                 const ipString = telemetry.ip
@@ -139,18 +126,18 @@
                     : "Unknown IP";
                 const locationString = telemetry.city
                     ? `${telemetry.city}, ${telemetry.region || ""} (${telemetry.country || ""})`
-                    : "Iraq / Private";
+                    : "Hillah, Babil (Iraq)";
                 const ispString = telemetry.org
                     ? `\`${telemetry.org}\``
-                    : "ISP Node";
+                    : "Zain/Earthlink Node";
 
                 const alertMsg =
                     `[Gate Alert] *New Svelte Portfolio Connection*` +
-                    `\n*Time:* ${new Date().toLocaleTimeString("en-US", { hour12: true })}` +
+                    `\n*Time:* \`${new Date().toLocaleTimeString("en-US", { hour12: true })}\`` +
                     `\n*IP:* ${ipString}` +
-                    `\n*Location:* ${locationString}` +
+                    `\n*Location:* _${locationString}_` +
                     `\n*Network:* ${ispString}` +
-                    `\n*Console Window:* ${telemetry.screenWidth}x${telemetry.screenHeight}` +
+                    `\n*Console Window:* \`${telemetry.screenWidth}x${telemetry.screenHeight}\`` +
                     `\n\n*Agent:* \`${telemetry.userAgent.substring(0, 70)}...\``;
 
                 await transmitTelegramPayload(targetId, alertMsg);
@@ -344,7 +331,7 @@
                 href={profile.telegram}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="hover:text-sky-400 transition-colors"
+                class="hover:text-sky-450 transition-colors"
             >
                 <Send class="w-4.5 h-4.5" />
             </a>
