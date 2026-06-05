@@ -1,6 +1,5 @@
 <script lang="ts">
     import { Mail, Send, Terminal, MapPin, Clock } from "lucide-svelte";
-    import { transmitTelegramPayload } from "./telemetry";
     import { profile } from "./data";
 
     let { botStatus = "idle", currentTime = "" } = $props<{
@@ -15,8 +14,6 @@
     let isSending = $state(false);
     let success = $state(false);
     let copied = $state(false);
-
-    const telegramChatId = import.meta.env.ViteTelegramChatId || "";
 
     const handleCopy = () => {
         navigator.clipboard.writeText(profile.email);
@@ -36,7 +33,7 @@
             "Marshalling message payload into binary structures...",
             "Generating payload cryptographic hash signature...",
             "Verifying secure spam compliance boundaries...",
-            "Transmission Initiated: Connecting to Telegram Core...",
+            "Transmission Initiated: Routing local client packet envelope...",
         ];
 
         logs = [logSteps[0]];
@@ -47,28 +44,25 @@
         }
 
         try {
-            const textMsg =
-                `[Inquiry Gate] *New Message Incoming*` +
-                `\n\n*Name:* ${name}` +
-                `\n*Email:* \`${email}\`` +
-                `\n\n*Message:*\n_${message}_`;
+            const subject = encodeURIComponent(
+                `Portfolio Message from ${name}`,
+            );
+            const body = encodeURIComponent(
+                `Caller Name: ${name}\n` +
+                    `Caller Address: ${email}\n\n` +
+                    `Message Content Payload:\n${message}`,
+            );
 
-            const res = await transmitTelegramPayload(telegramChatId, textMsg);
-            if (res.success) {
-                logs = [
-                    ...logs,
-                    "Delivery Confirmed: Relayed instantly to Dante's terminal!",
-                ];
-                success = true;
-                name = "";
-                email = "";
-                message = "";
-            } else {
-                logs = [
-                    ...logs,
-                    `🔴 Delivery Error: ${res.error || "Telegram rejected payload."}`,
-                ];
-            }
+            window.location.href = `mailto:ssdcv608@gmail.com?subject=${subject}&body=${body}`;
+
+            logs = [
+                ...logs,
+                "Delivery Confirmed: Mailto gateway interface spawned successfully!",
+            ];
+            success = true;
+            name = "";
+            email = "";
+            message = "";
         } catch (err: any) {
             logs = [...logs, `🔴 Transmission failure: ${err.message || err}`];
         } finally {
@@ -92,10 +86,7 @@
                         class="text-[10px] font-mono font-bold text-sky-400 uppercase tracking-widest block"
                         >Gateway Telemetry</span
                     >
-                    <span
-                        class="w-2 h-2 rounded-full {botStatus === 'active'
-                            ? 'bg-sky-500 animate-pulse'
-                            : 'bg-amber-400'}"
+                    <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"
                     ></span>
                 </div>
 
@@ -110,8 +101,8 @@
                     >
                         I monitor my systems communication logs natively. Submit
                         an inquiry through the dispatcher on the right to
-                        transmit a raw message envelope directly to my Telegram
-                        CLI terminal console.
+                        transmit a raw message envelope directly to my inbound
+                        mail interface routing terminal.
                     </p>
                 </div>
 
