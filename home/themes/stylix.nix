@@ -100,18 +100,6 @@ in
 
     # Wallpaper — references palette for DRY color usage.
     # Uses all 6 logo slots with distinct Catppuccin Mocha accent colors.
-    image = "${
-      inputs.nix-wallpaper.packages.${system}.default.override {
-        backgroundColor = "#${palette.base00}";
-        logoColors = {
-          color0 = "#${palette.base0D}"; # Blue
-          color1 = "#${palette.base0E}"; # Mauve
-          color2 = "#${palette.base0C}"; # Teal
-          color3 = "#${palette.base09}"; # Peach
-          color4 = "#${palette.base0B}"; # Green
-          color5 = "#${palette.base0F}"; # Pink
-        };
-      }
-    }/share/wallpapers/nixos-wallpaper.png";
+    image = ../assets/nixos-wallpaper.png;
   };
 }
