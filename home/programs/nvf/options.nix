@@ -1,0 +1,40 @@
+{ lib, ... }: {
+  programs.nvf.settings.vim = {
+    viAlias = false;
+    vimAlias = true;
+    withNodeJs = true;
+    options = {
+      autoindent = true;
+      smartindent = true;
+      shiftwidth = 2;
+      foldlevel = 99;
+      foldcolumn = "auto:1";
+      mousescroll = "ver:1,hor:1";
+      mousemoveevent = true;
+      fillchars = "eob:‿,fold: ,foldopen:▼,foldsep:⸽,foldclose:⏵";
+      signcolumn = "yes";
+      tabstop = 2;
+      softtabstop = 2;
+      wrap = false;
+      completeopt = "menu,menuone,noselect";
+    };
+    globals = {
+      navic_silence = true; # suppress navic multi-LSP attach warnings
+      suda_smart_edit = 1; # auto-escalate to root when writing read-only files
+      neovide_scale_factor = 0.7; # GUI frontend settings (no-op in terminal)
+      neovide_cursor_animation_length = 0.1;
+      neovide_cursor_short_animation_length = 0;
+    };
+    clipboard = {
+      enable = true;
+      registers = "unnamedplus";
+      providers.wl-copy.enable = true;
+    };
+    theme = {
+      enable = true;
+      name = lib.mkForce "catppuccin";
+      style = lib.mkForce "mocha";
+      transparent = lib.mkForce false;
+    };
+  };
+}
