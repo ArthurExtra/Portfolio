@@ -115,6 +115,10 @@ all:
 
 # Update all flake inputs
 update:
+    # Update inputs and run rebuild without lint
+    nix flake update
+    @{{JUST}} nixos
+    @{{JUST}} home
     nix flake update
 
 # Update Nixpkgs
