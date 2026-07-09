@@ -61,7 +61,7 @@ in
         ProxyCommand = "/run/current-system/sw/bin/tailscale nc %h %p";
       };
 
-      "devrio" = {
+      "ahmed" = {
         hostname = tsHosts.mail.fqdn;
         user = "root";
         ForwardAgent = "yes";
