@@ -41,7 +41,7 @@ in
   "window.menuBarVisibility" = "toggle";
   "window.titleBarStyle" = "custom";
   "chat.commandCenter.enabled" = false;
-  "editor.fontFamily" = "'${constants.font.monoNerd}', 'Noto Color Emoji', monospace";
+  "editor.fontFamily" = "'Maple Mono', 'Noto Color Emoji', monospace";
   "editor.fontSize" = constants.font.size;
   "editor.fontLigatures" = true;
   "editor.minimap.enabled" = false;
@@ -52,7 +52,7 @@ in
   "editor.cursorSmoothCaretAnimation" = "on";
   "editor.cursorBlinking" = "smooth";
   "editor.linkedEditing" = true;
-  "editor.stickyScroll.enabled" = true;
+  "editor.stickyScroll.enabled" = false;
   "editor.inlineSuggest.enabled" = true;
   "editor.wordWrap" = "off";
   "editor.tabSize" = 2;
