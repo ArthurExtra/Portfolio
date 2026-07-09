@@ -1,4 +1,4 @@
-# DANTE - Full Stack Web Developer
+# Arthur - Full Stack Web Developer
 
 A high-performance, responsive full-stack developer portfolio focused on clean UX design patterns, refined dark aesthetics, and reliable code.
 
@@ -76,4 +76,4 @@ Project Structure
 
 ---
 
-Built by [DANTE](https://github.com/ExtraDANTE).
+Built by [Arthur](https://github.com/ArthurExtra).

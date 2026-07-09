@@ -73,7 +73,7 @@ Memory: 2.95 GiB / 15.33 GiB (19%)`;
             opt = neofetchOutput;
         } else if (cmd === "whoami") {
             opt =
-                "DANTE (@ExtraDANTE) - Software Developer from Hillah, Babil, Iraq. I build custom bot systems, full-stack applications, mobile apps, and robust server automation.";
+                "Arthur (@ArthurExtra) - Software Developer from Hillah, Babil, Iraq. I build custom bot systems, full-stack applications, mobile apps, and robust server automation.";
         } else if (cmd === "skills") {
             opt = skillsData
                 .map((c) => `[${c.category}] ${c.items.join(", ")}`)
@@ -85,24 +85,24 @@ Memory: 2.95 GiB / 15.33 GiB (19%)`;
         } else if (cmd === "sysinfo") {
             opt = neofetchOutput;
         } else if (cmd === "git log" || cmd === "git" || cmd === "git status") {
-            opt = `Commit d4n7e231 [branch: main] - 3 days ago
-Author: Dante <@ExtraDANTE>
+            opt = `Commit arthur231 [branch: main] - 3 days ago
+Author: Arthur <@ArthurExtra>
     fix: rebuilt secure static front-end assets from updated local codebases
 
 Commit a9f123c8 [branch: main] - 3 days ago
-Author: Dante <@ExtraDANTE>
+Author: Arthur <@ArthurExtra>
     feat: transition portfolio build process to optimal serverless target for exitinger.github.io
 
 Commit b8c302fa [branch: main] - 1 week ago
-Author: Dante <@ExtraDANTE>
+Author: Arthur <@ArthurExtra>
     fix: update responsive margins and mobile layouts in sandbox terminal workbench view
 
 Commit c10dcf89 [branch: main] - 1 week ago
-Author: Dante <@ExtraDANTE>
+Author: Arthur <@ArthurExtra>
     refactor: restructure project inventory and optimize dynamic api configurations
 
 Commit f5e1281e [branch: main] - 2 weeks ago
-Author: Dante <@ExtraDANTE>
+Author: Arthur <@ArthurExtra>
     style: redesign profile layout into a beautiful high-rigidity dark theme with purpose animations`;
         } else if (cmd.startsWith("cat ")) {
             const fileName = cmd.substring(4).trim();
@@ -141,7 +141,7 @@ Author: Dante <@ExtraDANTE>
             <div class="w-3 h-3 bg-rose-500 rounded-full"></div>
             <div class="w-3 h-3 bg-amber-500 rounded-full"></div>
             <div class="w-3 h-3 bg-sky-500 rounded-full"></div>
-            <span class="text-slate-400 ml-2">ssh guest@dante.dev -p 3000</span>
+            <span class="text-slate-400 ml-2">ssh guest@arthur.dev -p 3000</span>
         </div>
         <div class="flex items-center gap-3 text-slate-500 font-mono">
             <div class="flex items-center gap-1">

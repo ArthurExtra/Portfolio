@@ -10,14 +10,14 @@ export interface Profile {
 }
 
 export const profile: Profile = {
-  name: "DANTE",
+  name: "Arthur",
   role: "Full-Stack & Mobile Developer",
   location: "Babil, Hilla, Iraq",
-  bio: "Ahmed Ali (DANTE) — A versatile developer focused on modern web applications, native/cross-platform mobile apps, and refined bot automation.",
+  bio: "Ahmed Ali (Arthur) — A versatile developer focused on modern web applications, native/cross-platform mobile apps, and refined bot automation.",
   email: "ssdcv608@gmail.com",
-  github: "https://github.com/ExtraDANTE",
-  telegram: "https://t.me/ExtraDANTE",
-  linkedin: "https://www.linkedin.com/in/extradante",
+  github: "https://github.com/ArthurExtra",
+  telegram: "https://t.me/ArthurExtra",
+  linkedin: "https://www.linkedin.com/in/arthurextra",
 };
 
 export const about = `
@@ -128,7 +128,7 @@ export const projects: Project[] = [
     title: "Portfolio",
     description:
       "A highly interactive, beautiful personal developer portfolio website showcasing responsive layouts, terminal-like sandboxes, and modern frontend designs.",
-    link: "https://github.com/ExtraDANTE/Portfolio/",
+    link: "https://github.com/ArthurExtra/Portfolio/",
     tags: ["Svelte", "Vite", "Tailwind CSS", "TypeScript"],
     featured: true,
   },
@@ -159,7 +159,7 @@ export const repoFiles: RepoFile[] = [
       "chore: update dependencies for React, Next.js, and Vue frameworks",
     lastCommitDate: "5 mins ago",
     content: `{
-  "name": "dante-workspace",
+  "name": "arthur-workspace",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -188,7 +188,7 @@ export const repoFiles: RepoFile[] = [
 import { ref } from 'vue';
 
 const activeTab = ref('dashboard');
-const message = ref('DANTE Web Workspace');
+const message = ref('Arthur Web Workspace');
 </script>
 
 <template>
@@ -210,7 +210,7 @@ const message = ref('DANTE Web Workspace');
     language: "markdown",
     lastCommitMessage: "docs: refine infrastructure development bio",
     lastCommitDate: "Just now",
-    content: `# Hello! I'm DANTE
+    content: `# Hello! I'm Arthur
 
 A Software Developer based in Hillah, Babil, Iraq. I specialize in building robust full-stack web applications, custom automated bot architectures, cross-platform Android & iOS apps (Flutter), and clean development utilities.
 

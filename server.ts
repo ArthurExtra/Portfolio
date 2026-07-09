@@ -83,10 +83,10 @@ async function startServer() {
   app.get("/api/github/repos", async (req, res) => {
     try {
       const response = await fetch(
-        "https://api.github.com/users/ExtraDANTE/repos?per_page=100&sort=updated",
+        "https://api.github.com/users/ArthurExtra/repos?per_page=100&sort=updated",
         {
           headers: {
-            "User-Agent": "Express-Server-DANTE-Portfolio",
+            "User-Agent": "Express-Server-Arthur-Portfolio",
           },
         },
       );
@@ -119,7 +119,7 @@ async function startServer() {
 
   app.listen(PORT, "0.0.0.0", () => {
     console.log(
-      `[DANTE SECURITY SYSTEM] Full-stack architecture live on port ${PORT}`,
+      `[Arthur SECURITY SYSTEM] Full-stack architecture live on port ${PORT}`,
     );
   });
 }
