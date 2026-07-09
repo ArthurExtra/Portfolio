@@ -252,3 +252,4 @@ in
       vscode-icons-team.vscode-icons # VS Code file icon theme
     ])
     ++ marketplaceExtensions;
+}
