@@ -22,7 +22,6 @@ with pkgs;
 with pkgsStable;
 [
   # === Integrated Development Environments ===
-  vscode-fhs # Visual Studio Code editor (FHS wrapper for extension compatibility)
   zedNvidiaXwayland # Zed editor, forced away from unstable NVIDIA Wayland path
   sqlitebrowser # SQLite database browser GUI
   pkgs.redisinsight # Redis GUI
