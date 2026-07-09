@@ -13,9 +13,6 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./Portfolio
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,5 +37,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./Portfolio/dist
+          publish_dir: ./dist
           cname: arthurx.is-a.dev
