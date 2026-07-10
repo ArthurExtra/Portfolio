@@ -1,11 +1,11 @@
 <script lang="ts">
     import {
         Clock,
+        Code,
         Compass,
         Layers,
-        Terminal,
-        Code,
         Mail,
+        Terminal,
     } from "lucide-svelte";
     import { profile } from "./data";
 
@@ -20,11 +20,11 @@
         class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-4"
     >
         <div id="brand-logo" class="flex items-center gap-3">
-            <div
-                class="w-9 h-9 rounded-lg bg-[#14233c] border border-sky-500/20 flex items-center justify-center font-mono font-black text-sky-400 text-sm tracking-widest leading-none"
-            >
-                D
-            </div>
+            <img
+                src="/favicon.ico"
+                alt="Arthur logo"
+                class="w-9 h-9 rounded-lg border border-sky-500/20"
+            />
             <div class="text-left">
                 <div class="flex items-center gap-1.5">
                     <span
